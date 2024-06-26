@@ -7,4 +7,5 @@ public class Form {
     int id;
     String name;
     ArrayList<Task> tasks;
+    int score = tasks.size();
 }
