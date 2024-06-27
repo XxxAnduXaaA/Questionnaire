@@ -1,10 +1,24 @@
 package com.example.formmaker.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Table(name = "user")
+@Data
+@Entity
 public class User {
-    int id;
-    String username;
-    String email;
-    String password;
-    double rating; //Начисляется на основе правильных ответов за тест, высчитывается по среднему арифметическому
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @Column
+    private String username;
+
+    @Column
+    private String email;
+
+    @Column
+    private String password;
+
 }

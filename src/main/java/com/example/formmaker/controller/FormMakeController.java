@@ -1,2 +1,4 @@
-package com.example.formmaker.controller;public class FormMakeController {
+package com.example.formmaker.controller;
+
+public class FormMakeController {
 }
