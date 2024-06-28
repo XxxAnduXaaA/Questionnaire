@@ -3,7 +3,7 @@ package com.example.formmaker.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Table(name = "user")
+@Table(name = "user_table")
 @Data
 @Entity
 public class User {

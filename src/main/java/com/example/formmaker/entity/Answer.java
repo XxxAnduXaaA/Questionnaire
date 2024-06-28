@@ -3,17 +3,17 @@ package com.example.formmaker.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Table(name = "answers")
+@Table(name = "answer_table")
 @Data
 @Entity
-public class Answers {
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
     @ManyToOne
-    @JoinColumn(name = "questionId", nullable = false)
-    private Questions questions;
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
     @Column
     private String answerText;
