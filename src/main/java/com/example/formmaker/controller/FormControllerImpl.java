@@ -26,22 +26,22 @@ public class FormControllerImpl implements FormController{
     }
 
     @Override
-    public Form getFormById(Long id) {
-        return formService.getFormById(id);
+    public Form getFormById(Long formId) {
+        return formService.getFormById(formId);
     }
 
     @Override
-    public Form updateFormById(Long id, Form updatedForm) {
-        return formService.updateFormById(id, updatedForm);
+    public Form updateFormById(Long formId, Form updatedForm) {
+        return formService.updateFormById(formId, updatedForm);
     }
 
     @Override
-    public Form addQuestionToForm(Long id, Question question) {
-        return formService.addQuestionToForm(id, question);
+    public Form addQuestionToForm(Long formId, Question question) {
+        return formService.addQuestionToForm(formId, question);
     }
 
     @Override
-    public void deleteFormById(Long id) {
-        formService.deleteFormById(id);
+    public void deleteFormById(Long formId) {
+        formService.deleteFormById(formId);
     }
 }
