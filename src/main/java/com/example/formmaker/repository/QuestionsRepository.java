@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface QuestionsRepository extends JpaRepository<Question, Long> {
-    List<Question> findByForm(Form form);
+    List<Question> findByFormId(Long formId);
 }
