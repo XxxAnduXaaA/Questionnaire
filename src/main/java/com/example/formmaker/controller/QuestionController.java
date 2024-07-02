@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public interface QuestionController {
-    @PutMapping("/adminPanel/question/{id}")
-    public Question updateQuestion(@PathVariable @Min(1) Long id, @Valid @RequestBody Question updatedQuestion);
-    @DeleteMapping("/adminPanel/question/{id}")
-    public void deleteQuestion(@PathVariable @Min(1) Long id);
-    @GetMapping("/adminPanel/forms/{id}/questions")
-    public List<Question> findQuestionsByForm(@PathVariable @Min(1) Long id);
+    @PutMapping("/adminPanel/question/{questionId}")
+    public Question updateQuestion(@PathVariable @Min(1) Long questionId, @Valid @RequestBody Question updatedQuestion);
+    @DeleteMapping("/adminPanel/question/{questionId}")
+    public void deleteQuestion(@PathVariable @Min(1) Long questionId);
+    @GetMapping("/adminPanel/forms/{questionId}/questions")
+    public List<Question> findQuestionsByForm(@PathVariable @Min(1) Long questionId);
 }
