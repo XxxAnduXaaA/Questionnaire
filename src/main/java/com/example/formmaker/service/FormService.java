@@ -8,8 +8,8 @@ import java.util.List;
 public interface FormService {
     Form createForm(Form form);
     List<Form> getAllForms();
-    Form getFormById(Long id);
-    Form updateFormById(Long id, Form updatedForm);
+    Form getFormById(Long formId);
+    Form updateFormById(Long formId, Form updatedForm);
     Form addQuestionToForm(Long formId, Question question);
-    void deleteFormById(Long id);
+    void deleteFormById(Long formId);
 }
