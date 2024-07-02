@@ -10,11 +10,11 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long question_id;
+    private Long questionId;
 
     @ManyToOne
     @JoinColumn(name = "form_id", nullable = false)
-    private Form form_id;
+    private Form formId;
 
     @Column
     private String questionText;

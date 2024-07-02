@@ -15,7 +15,7 @@ import java.util.List;
 public class Form {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long form_id;
+    private Long formId;
 
     @Column
     private String title;
