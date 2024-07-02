@@ -20,8 +20,8 @@ public class QuestionServiceImpl implements QuestionService {
     private FormRepository formRepository;
 
     @Override
-    public Question updateQuestion(Long question_id, Question updatedQuestion) {
-        Optional<Question> optionalQuestion = questionsRepository.findById(question_id);
+    public Question updateQuestion(Long questionId, Question updatedQuestion) {
+        Optional<Question> optionalQuestion = questionsRepository.findById(questionId);
 
         if(optionalQuestion.isPresent()){
             Question existingQuestion = optionalQuestion.get();
@@ -30,18 +30,18 @@ public class QuestionServiceImpl implements QuestionService {
             return questionsRepository.save(existingQuestion);
         }
 
-        throw new RuntimeException("Question not found with id" + question_id);
+        throw new RuntimeException("Question not found with id" + questionId);
     }
 
 
     @Override
-    public void deleteQuestion(Long question_id) {
-        questionsRepository.deleteById(question_id);
+    public void deleteQuestion(Long questionId) {
+        questionsRepository.deleteById(questionId);
     }
 
     @Override
-    public List<Question> findQuestionsByForm(Long form_id) {
-        Optional<Form> optionalForm = formRepository.findById(form_id);
+    public List<Question> findQuestionsByForm(Long formId) {
+        Optional<Form> optionalForm = formRepository.findById(formId);
 
         if (optionalForm.isPresent()) {
             Form existingForm = optionalForm.get();
@@ -50,7 +50,7 @@ public class QuestionServiceImpl implements QuestionService {
             return existingForm.getQuestions();
         }
 
-        throw new RuntimeException("Form not found with id" + form_id);
+        throw new RuntimeException("Form not found with id" + formId);
     }
 
 //    @Override
