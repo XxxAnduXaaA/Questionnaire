@@ -22,8 +22,8 @@ public class AnswerServiceImpl implements AnswerService {
     private QuestionsRepository questionsRepository;
 
     @Override
-    public Answer addAnswerToQuestion(Long question_id, Answer answer) {
-        Optional<Question> optionalQuestion = questionsRepository.findById(question_id);
+    public Answer addAnswerToQuestion(Long questionId, Answer answer) {
+        Optional<Question> optionalQuestion = questionsRepository.findById(questionId);
 
         if (optionalQuestion.isPresent()) {
             answer.setQuestion(optionalQuestion.get());
@@ -32,12 +32,12 @@ public class AnswerServiceImpl implements AnswerService {
         }
 
 
-        throw new RuntimeException("Question not found with id" + question_id);
+        throw new RuntimeException("Question not found with id" + questionId);
     }
 
     @Override
-    public Answer updateAnswer(Long question_id, Answer updatedAnswer) {
-        Optional<Answer> optionalAnswer = answerRepository.findById(question_id);
+    public Answer updateAnswer(Long answerId, Answer updatedAnswer) {
+        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
 
         if (optionalAnswer.isPresent()) {
             Answer existingAnswer = optionalAnswer.get();
@@ -48,27 +48,21 @@ public class AnswerServiceImpl implements AnswerService {
         }
 
 
-        throw new RuntimeException("Question not found with id" + question_id);
+        throw new RuntimeException("Answer not found with id" + answerId);
     }
 
     @Override
-    public void deleteAnswerById(Long answer_id) {
-        answerRepository.deleteById(answer_id);
+    public void deleteAnswerById(Long answerId) {
+        answerRepository.deleteById(answerId);
     }
 
     @Override
-    public List<Answer> getAnswersByQuestionId(Long question_id) {
-        return answerRepository.findByQuestion(question_id);
+    public List<Answer> getAnswersByQuestionId(Long questionId) {
+        return answerRepository.findByQuestion(questionId);
     }
 
     @Override
-    public List<Answer> getCorrectAnswersByFormId(Long form_id) {
-        List<Question> questions = questionsRepository.findByFormId(form_id);
-        List<Answer> correctAnswers = new ArrayList<>();
-
-        for(Question question: questions){
-            correctAnswers.add(answerRepository.findAnswerByQuestionAndIsCorrectTrue(question.getQuestionId()));
-        }
-        return correctAnswers;
+    public Answer getCorrectAnswerByQuestionId(Long questionId) {
+        return answerRepository.findAnswerByQuestionAndIsCorrectTrue(questionId);
     }
 }
