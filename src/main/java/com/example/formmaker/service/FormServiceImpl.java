@@ -24,8 +24,8 @@ public class FormServiceImpl implements FormService{
     }
 
     @Override
-    public Form getFormById(Long id) {
-        return formRepository.findById(id).orElse(null);
+    public Form getFormById(Long formId) {
+        return formRepository.findById(formId).orElse(null);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class FormServiceImpl implements FormService{
     }
 
     @Override
-    public Form addQuestionToForm(Long form_Id, Question question) {
-        Optional<Form> optionalForm = formRepository.findById(form_Id);
+    public Form addQuestionToForm(Long formId, Question question) {
+        Optional<Form> optionalForm = formRepository.findById(formId);
 
         if(optionalForm.isPresent()){
             Form existingForm = optionalForm.get();
@@ -56,7 +56,7 @@ public class FormServiceImpl implements FormService{
             return formRepository.save(existingForm);
         }
 
-        throw new RuntimeException("Form not found with id" + form_Id);
+        throw new RuntimeException("Form not found with id" + formId);
     }
 
     @Override
