@@ -14,12 +14,12 @@ public interface FormController {
     Form createForm(@Valid @RequestBody Form form);
     @GetMapping("/adminPanel/getAllForms")
     List<Form> getAllForms();
-    @GetMapping("/form/{id}")
-    Form getFormById(@PathVariable @Min(1) Long id);
-    @PutMapping("/form/{id}")
-    Form updateFormById(@PathVariable @Min(1) Long id, @Valid @RequestBody Form updatedForm);
-    @PostMapping("/adminPanel/form/{id}")
-    Form addQuestionToForm(@PathVariable @Min(1) Long id, @Valid @RequestBody Question question);
-    @DeleteMapping("/adminPanel/form/{id}")
-    void deleteFormById(@PathVariable @Min(1) Long id);
+    @GetMapping("/form/{formId}")
+    Form getFormById(@PathVariable @Min(1) Long formId);
+    @PutMapping("/form/{formId}")
+    Form updateFormById(@PathVariable @Min(1) Long formId, @Valid @RequestBody Form updatedForm);
+    @PostMapping("/adminPanel/form/{formId}")
+    Form addQuestionToForm(@PathVariable @Min(1) Long formId, @Valid @RequestBody Question question);
+    @DeleteMapping("/adminPanel/form/{formId}")
+    void deleteFormById(@PathVariable @Min(1) Long formId);
 }
