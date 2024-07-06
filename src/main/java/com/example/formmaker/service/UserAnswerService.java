@@ -9,5 +9,6 @@ public interface UserAnswerService {
    public List<UserAnswer> getAnswerByUserIdAndQuestionId(Long userId, Long questionId);
    public List<UserAnswer> getByUserIdAndFormId(Long userId, Long formId);
    public List<UserAnswer> getByUserId(Long userId);
+   public boolean submitFormAnswers(Long formId, List<UserAnswer> userAnswers);
 
 }
