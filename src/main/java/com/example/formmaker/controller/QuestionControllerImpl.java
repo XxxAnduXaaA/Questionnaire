@@ -24,7 +24,7 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
-    public List<Question> findQuestionsByForm(Long questionId) {
-        return questionService.findQuestionsByForm(questionId);
+    public List<Question> findQuestionsByForm(Long formId) {
+        return questionService.findQuestionsByForm(formId);
     }
 }
