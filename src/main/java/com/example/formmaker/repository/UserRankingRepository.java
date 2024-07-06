@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface UserRankingRepository extends JpaRepository<UserRanking, Long> {
-    UserRanking findByUser(Long userId);
-    List<UserRanking> findAllByOrderByRankIdAsc();
+    UserRanking findByUserId(Long userId);
+    List<UserRanking> findAllByOrderByTotalScoreAsc();
 }
