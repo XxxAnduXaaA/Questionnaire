@@ -57,12 +57,12 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> getAnswersByQuestionId(Long questionId) {
-        return answerRepository.findByQuestion(questionId);
+    public List<Answer> getAnswersByQuestion(Long questionId) {
+        return answerRepository.findByQuestion_QuestionId(questionId);
     }
 
     @Override
-    public Answer getCorrectAnswerByQuestionId(Long questionId) {
-        return answerRepository.findAnswerByQuestionAndIsCorrectTrue(questionId);
+    public Answer getCorrectAnswerByQuestion(Long questionId) {
+        return answerRepository.findAnswerByQuestion_QuestionIdAndIsCorrectTrue(questionId);
     }
 }
