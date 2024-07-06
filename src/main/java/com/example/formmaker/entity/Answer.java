@@ -1,5 +1,6 @@
 package com.example.formmaker.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,11 +9,12 @@ import lombok.Data;
 @Entity
 public class Answer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long answerId;
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
+    @JsonBackReference
     private Question question;
 
     @Column
