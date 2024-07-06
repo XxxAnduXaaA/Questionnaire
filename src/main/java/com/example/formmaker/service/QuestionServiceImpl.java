@@ -25,7 +25,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         if(optionalQuestion.isPresent()){
             Question existingQuestion = optionalQuestion.get();
-            existingQuestion.setFormId(updatedQuestion.getFormId());
+            existingQuestion.setForm(updatedQuestion.getForm());
             existingQuestion.setQuestionText(updatedQuestion.getQuestionText());
             return questionsRepository.save(existingQuestion);
         }
