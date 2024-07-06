@@ -10,16 +10,16 @@ import java.util.List;
 @Service
 public class UserRankingServiceImpl implements UserRankingService{
 
-    @Autowired
+
     private UserRankingRepository userRankingRepository;
 
     @Override
     public UserRanking getRankUserById(Long userId) {
-        return userRankingRepository.findByUser(userId);
+        return userRankingRepository.findByUserId(userId);
     }
 
     @Override
     public List<UserRanking> getAllRanks() {
-        return userRankingRepository.findAllByOrderByRankIdAsc();
+        return userRankingRepository.findAllByOrderByTotalScoreAsc();
     }
 }
