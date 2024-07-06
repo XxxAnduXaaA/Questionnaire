@@ -1,5 +1,6 @@
 package com.example.formmaker.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 public class Form {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long formId;
 
     @Column
@@ -23,11 +24,9 @@ public class Form {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "form_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Question> questions;
 
-//    @Column
-//    private int score = tasks.size();
-
-    //Добавить created_by
+    //Todo: add created_by
 }
