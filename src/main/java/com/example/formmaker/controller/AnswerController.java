@@ -18,5 +18,5 @@ public interface AnswerController {
     @GetMapping("/question/{answerId}/getAnswers")
     public List<Answer> getAnswersByQuestionId(@PathVariable @Min(1) Long answerId);
     @GetMapping("/question/{answerId}/getCorrectAnswer")
-    public Answer getCorrectAnswerByFormId(@PathVariable @Min(1) Long answerId);
+    public Answer getCorrectAnswerByQuestionId(@PathVariable @Min(1) Long answerId);
 }
