@@ -29,12 +29,12 @@ public class AnswerControllerImpl implements AnswerController{
     }
 
     @Override
-    public List<Answer> getAnswersByQuestionId(Long answerId) {
-        return answerService.getAnswersByQuestionId(answerId);
+    public List<Answer> getAnswersByQuestionId(Long questionId) {
+        return answerService.getAnswersByQuestion(questionId);
     }
 
     @Override
-    public Answer getCorrectAnswerByFormId(Long answerId) {
-        return answerService.getCorrectAnswerByQuestionId(answerId);
+    public Answer getCorrectAnswerByQuestionId(Long answerId) {
+        return answerService.getCorrectAnswerByQuestion(answerId);
     }
 }
