@@ -8,7 +8,7 @@ import lombok.Data;
 @Entity
 public class UserRanking {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private Long rankingId;
 
