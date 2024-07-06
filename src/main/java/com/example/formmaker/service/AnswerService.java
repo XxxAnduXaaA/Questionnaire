@@ -8,7 +8,7 @@ public interface AnswerService {
     public Answer addAnswerToQuestion(Long questionId, Answer answer);
     public Answer updateAnswer(Long questionId, Answer updatedAnswer);
     public void deleteAnswerById(Long answerId);
-    public List<Answer> getAnswersByQuestionId(Long questionId);
+    public List<Answer> getAnswersByQuestion(Long questionId);
 //    public List<Answer> getCorrectAnswersByFormId(Long form_id);  TODO: Добавить в form
-    public Answer getCorrectAnswerByQuestionId(Long questionId);
+    public Answer getCorrectAnswerByQuestion(Long questionId);
 }
