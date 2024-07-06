@@ -13,6 +13,6 @@ public interface QuestionController {
     public Question updateQuestion(@PathVariable @Min(1) Long questionId, @Valid @RequestBody Question updatedQuestion);
     @DeleteMapping("/question/{questionId}")
     public void deleteQuestion(@PathVariable @Min(1) Long questionId);
-    @GetMapping("/forms/{questionId}/questions")
-    public List<Question> findQuestionsByForm(@PathVariable @Min(1) Long questionId);
+    @GetMapping("/forms/{formId}/questions")
+    public List<Question> findQuestionsByForm(@PathVariable @Min(1) Long formId);
 }
