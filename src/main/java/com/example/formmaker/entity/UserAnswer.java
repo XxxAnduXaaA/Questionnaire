@@ -1,11 +1,14 @@
 package com.example.formmaker.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Table(name = "user_answer_table")
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
