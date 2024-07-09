@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class UserRankingServiceImpl implements UserRankingService{
 
-
+    @Autowired
     private UserRankingRepository userRankingRepository;
 
     @Override
