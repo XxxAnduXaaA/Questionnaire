@@ -14,8 +14,8 @@ public class AnswerControllerImpl implements AnswerController{
     private AnswerService answerService;
 
     @Override
-    public Answer addAnswerToQuestion(Long answerId, Answer answer) {
-        return answerService.addAnswerToQuestion(answerId, answer);
+    public Answer addAnswerToQuestion(Long questionId, Answer answer) {
+        return answerService.addAnswerToQuestion(questionId, answer);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AnswerControllerImpl implements AnswerController{
     }
 
     @Override
-    public Answer getCorrectAnswerByQuestionId(Long answerId) {
-        return answerService.getCorrectAnswerByQuestion(answerId);
+    public Answer getCorrectAnswerByQuestionId(Long questionId) {
+        return answerService.getCorrectAnswerByQuestion(questionId);
     }
 }
