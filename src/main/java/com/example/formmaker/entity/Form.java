@@ -2,8 +2,7 @@ package com.example.formmaker.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
@@ -11,7 +10,10 @@ import java.util.List;
 
 
 @Table(name = "form_table")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Form {
     @Id
