@@ -3,12 +3,13 @@ package com.example.formmaker.service;
 import com.example.formmaker.entity.Answer;
 import com.example.formmaker.entity.Form;
 import com.example.formmaker.entity.Question;
+import com.example.formmaker.entity.UserAnswer;
 import com.example.formmaker.repository.AnswerRepository;
 import com.example.formmaker.repository.QuestionsRepository;
+import com.example.formmaker.repository.UserAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Autowired
     private QuestionsRepository questionsRepository;
+
+    @Autowired
+    private UserAnswerRepository userAnswerRepository;
 
     @Override
     public Answer addAnswerToQuestion(Long questionId, Answer answer) {
@@ -53,6 +57,10 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void deleteAnswerById(Long answerId) {
+
+        List<UserAnswer> userAnswers = userAnswerRepository.findAllByAnswer_AnswerId(answerId);
+        userAnswerRepository.deleteAll(userAnswers);
+
         answerRepository.deleteById(answerId);
     }
 
