@@ -5,6 +5,7 @@ import com.example.formmaker.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -61,39 +62,15 @@ public class UserAnswerServiceImpl implements UserAnswerService{
         return userAnswerRepository.findByUserId(userId);
     }
 
+    @Transactional
     @Override
     public boolean submitFormAnswers(Long formId, List<UserAnswer> userAnswers) {
 
-        // Проверяем, что форма существует
-        Form form = formRepository.findById(formId)
-                .orElseThrow(() -> new EntityNotFoundException("Form not found with id: " + formId));
-
-
-
-        for (UserAnswer userAnswer : userAnswers) {
-            Question question = questionsRepository.findById(userAnswer.getQuestion().getQuestionId())
-                    .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + userAnswer.getQuestion().getQuestionId()));
-
-            // Проверяем, что вопрос принадлежит форме
-            if (!question.getForm().equals(formId)) {
-                throw new IllegalArgumentException("Question does not belong to the form with id: " + formId);
-            }
-
-            Answer correctAnswer = answerRepository.findAnswerByQuestion_QuestionIdAndIsCorrectTrue(question.getQuestionId());
-
-            User user = userRepository.findById(userAnswer.getUser().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userAnswer.getUser().getId()));
-
-            Answer answer = answerRepository.findById(userAnswer.getAnswer().getAnswerId())
-                    .orElseThrow(() -> new EntityNotFoundException("Answer not found with id: " + userAnswer.getAnswer().getAnswerId()));
-
-            userAnswer.setUser(user);
-            userAnswer.setQuestion(question);
-            userAnswer.setAnswer(answer);
-
-            userAnswerRepository.save(userAnswer);
+        for(UserAnswer userAnswer: userAnswers){
+            submitAnswer(formId, userAnswer);
         }
-        Long userId = userAnswers.get(0).getUserAnswerId();
+
+        Long userId = userAnswers.get(0).getUser().getId();
 
         int score = scoreCounter(userId,formId);
 
@@ -112,5 +89,22 @@ public class UserAnswerServiceImpl implements UserAnswerService{
         return true;
     }
 
+    @Override
+    public UserAnswer submitAnswer(Long formId, UserAnswer userAnswer) {
+
+        Form form = formRepository.findById(formId)
+                .orElseThrow(() -> new EntityNotFoundException("Form not found with id: " + formId));
+
+        Question question = questionsRepository.findById(userAnswer.getQuestion().getQuestionId())
+                .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + userAnswer.getQuestion().getQuestionId()));
+
+        Answer answer = answerRepository.findById(userAnswer.getAnswer().getAnswerId())
+                .orElseThrow(() -> new EntityNotFoundException("Answer not found with id: " + userAnswer.getUserAnswerId()));
+
+        User user = userRepository.findById(userAnswer.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userAnswer.getUser().getId()));
+
+        return userAnswerRepository.save(userAnswer);
+    }
 
 }
