@@ -1,10 +1,13 @@
 package com.example.formmaker.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Table(name = "user_table")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User {
     @Id
