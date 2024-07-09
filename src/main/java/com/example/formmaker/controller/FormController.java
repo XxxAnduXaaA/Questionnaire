@@ -16,7 +16,7 @@ public interface FormController {
     List<Form> getAllForms();
     @GetMapping("/form/{formId}")
     Form getFormById(@PathVariable @Min(1) Long formId);
-    @PutMapping("/form/{formId}")
+    @PutMapping("/adminPanel/form/{formId}")
     Form updateFormById(@PathVariable @Min(1) Long formId, @Valid @RequestBody Form updatedForm);
     @PostMapping("/adminPanel/form/{formId}")
     Form addQuestionToForm(@PathVariable @Min(1) Long formId, @Valid @RequestBody Question question);
