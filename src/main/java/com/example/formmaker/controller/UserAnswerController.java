@@ -1,6 +1,7 @@
 package com.example.formmaker.controller;
 
 import com.example.formmaker.entity.UserAnswer;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,6 @@ public interface UserAnswerController {
     @GetMapping("/user/{userId}/completedForm/{formId}")
     public List<UserAnswer> getByUserIdAndFormId(@PathVariable @Min(1) Long userId, @PathVariable @Min(1) Long formId);
     @PostMapping("/form/{formId}/submit-form-answers")
-    public ResponseEntity<String> submitFormAnswers(@PathVariable @Min(1) Long formId, @RequestBody List<UserAnswer> userAnswers);
+    public ResponseEntity<String> submitFormAnswers(@PathVariable @Min(1) Long formId, @Valid @RequestBody List<UserAnswer> userAnswers);
 
 }
