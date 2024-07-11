@@ -3,6 +3,7 @@ package com.example.formmaker.service;
 import com.example.formmaker.entity.User;
 import com.example.formmaker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +14,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService{
     public User createUser(User user) {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
         if(optionalUser.isEmpty()){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         }
         throw new RuntimeException("Email" + user.getEmail() + "already in use" );

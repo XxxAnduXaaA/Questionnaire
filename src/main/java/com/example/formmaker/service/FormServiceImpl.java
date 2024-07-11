@@ -43,33 +43,6 @@ public class FormServiceImpl implements FormService{
             existingForm.setDescription(updatedForm.getDescription());
             existingForm.setTitle(updatedForm.getTitle());
 
-//            List<Question> existingQuestions = existingForm.getQuestions();
-//            List<Question> updatedQuestions = updatedForm.getQuestions();
-//
-//            int i = 0;
-//
-//            while(i < existingQuestions.size() && i < updatedQuestions.size()){
-//
-//                existingForm.getQuestions().get(i).setQuestionText(updatedForm.getQuestions().get(i).getQuestionText());
-//                existingForm.getQuestions().get(i).setAnswers(updatedForm.getQuestions().get(i).getAnswers());
-//                i++;
-//
-//            }
-//
-//            if(i < updatedQuestions.size()){ //для большего updatedQuestions
-//                while(i < updatedQuestions.size()){
-//                    repository.save(integers1.get(i));
-//                    addQuestionToForm(formId, updatedQuestions.get(i));
-//                    i++;
-//                }
-//            }
-//            if(i < existingQuestions.size()){ //для большего existingQuestions
-//                while(i < existingQuestions.size()){
-//                    existingQuestions.remove(i);
-//                    questionsRepository.deleteById(existingQuestions.get(i).getQuestionId());
-//                }
-//
-
             return formRepository.save(existingForm);
         }
 

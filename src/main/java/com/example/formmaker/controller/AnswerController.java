@@ -3,11 +3,13 @@ package com.example.formmaker.controller;
 import com.example.formmaker.entity.Answer;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/adminPanel")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public interface AnswerController {
     @PostMapping("/question/{questionId}/answer")
     public Answer addAnswerToQuestion(@PathVariable @Min(1) Long questionId, @Valid @RequestBody Answer answer);

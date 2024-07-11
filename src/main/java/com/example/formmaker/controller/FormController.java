@@ -4,6 +4,7 @@ import com.example.formmaker.entity.Form;
 import com.example.formmaker.entity.Question;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,15 +12,21 @@ import java.util.List;
 public interface FormController {
 
     @PostMapping("/adminPanel/form")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     Form createForm(@Valid @RequestBody Form form);
     @GetMapping("/adminPanel/getAllForms")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     List<Form> getAllForms();
     @GetMapping("/form/{formId}")
-    Form getFormById(@PathVariable @Min(1) Long formId);
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    Form getFormById(@PathVariable    Long formId);
     @PutMapping("/adminPanel/form/{formId}")
-    Form updateFormById(@PathVariable @Min(1) Long formId, @Valid @RequestBody Form updatedForm);
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    Form updateFormById(@PathVariable    Long formId,  @RequestBody Form updatedForm);
     @PostMapping("/adminPanel/form/{formId}")
-    Form addQuestionToForm(@PathVariable @Min(1) Long formId, @Valid @RequestBody Question question);
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    Form addQuestionToForm(@PathVariable    Long formId,   @RequestBody Question question);
     @DeleteMapping("/adminPanel/form/{formId}")
-    void deleteFormById(@PathVariable @Min(1) Long formId);
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    void deleteFormById(@PathVariable   Long formId);
 }

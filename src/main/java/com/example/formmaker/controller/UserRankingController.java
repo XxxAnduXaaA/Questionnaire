@@ -2,6 +2,7 @@ package com.example.formmaker.controller;
 
 import com.example.formmaker.entity.UserRanking;
 import jakarta.validation.constraints.Min;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @RequestMapping("/user")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 public interface UserRankingController {
     @GetMapping("/{userId}/rank")
     public UserRanking getRankUserById(@PathVariable @Min(1) Long userId);

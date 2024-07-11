@@ -4,6 +4,7 @@ import com.example.formmaker.entity.UserAnswer;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +16,10 @@ public interface UserAnswerController {
 //    @GetMapping("/user/{userId}/")
 //    public UserAnswer getAnswerByUserIdAndQuestionId(Long userId, Long questionId);
     @GetMapping("/user/{userId}/completedForm/{formId}")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<UserAnswer> getByUserIdAndFormId(@PathVariable @Min(1) Long userId, @PathVariable @Min(1) Long formId);
     @PostMapping("/form/{formId}/submit-form-answers")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<String> submitFormAnswers(@PathVariable @Min(1) Long formId, @Valid @RequestBody List<UserAnswer> userAnswers);
 
 }

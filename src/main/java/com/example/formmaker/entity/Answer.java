@@ -18,7 +18,7 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     @JsonBackReference
-    private Question question;
+        private Question question;
 
     @Column
     private String answerText;
