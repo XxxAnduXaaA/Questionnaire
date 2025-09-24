@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface QuestionsRepository extends JpaRepository<Question, Long> {
-    List<Question> findByForm_FormId(Long formId);
+    Question findByAnswers_AnswerId(Long answerId);
 }

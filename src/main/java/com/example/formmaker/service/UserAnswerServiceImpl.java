@@ -1,110 +1,42 @@
 package com.example.formmaker.service;
 
 import com.example.formmaker.entity.*;
-import com.example.formmaker.repository.*;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.formmaker.repository.QuestionsRepository;
+import com.example.formmaker.repository.UserAnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserAnswerServiceImpl implements UserAnswerService{
+public class UserAnswerServiceImpl implements UserAnswerService {
+    private final UserAnswerRepository userAnswerRepository;
+    private final QuestionsRepository questionsRepository;
+    private final FormResultService formResultService;
 
-    @Autowired
-    private UserAnswerRepository userAnswerRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private FormRepository formRepository;
-
-    @Autowired
-    private QuestionsRepository questionsRepository;
-
-    @Autowired
-    private UserRankingRepository userRankingRepository;
-
-    public int scoreCounter(Long userId, Long formId){
-        List<UserAnswer> userAnswers = userAnswerRepository.findByUserIdAndQuestion_Form_FormId(userId, formId);
-        int score = 0;
-
-        if (!userAnswers.isEmpty()){
-            for(UserAnswer userAnswer : userAnswers){
-                Answer correctAnswer = answerRepository.findAnswerByQuestion_QuestionIdAndIsCorrectTrue(userAnswer.getQuestion().getQuestionId());
-                if(userAnswer.getAnswer().getAnswerId().equals(correctAnswer.getAnswerId())){
-                    score++;
-                }
-            }
-        }
-
-        return score;
-    }
-
-
-    @Override
-    public List<UserAnswer> getAnswerByUserIdAndQuestionId(Long userId, Long questionId) {
-        return userAnswerRepository.findByUserIdAndQuestion_QuestionId(userId, questionId);
-    }
-
-    @Override
-    public List<UserAnswer> getByUserIdAndFormId(Long userId, Long formId) {
-        return userAnswerRepository.findByUserIdAndQuestion_Form_FormId(userId, formId);
-    }
-
-    @Override
-    public List<UserAnswer> getByUserId(Long userId) {
-        return userAnswerRepository.findByUserId(userId);
+    public UserAnswerServiceImpl(UserAnswerRepository userAnswerRepository, QuestionsRepository questionsRepository, FormResultService formResultService) {
+        this.formResultService = formResultService;
+        this.userAnswerRepository = userAnswerRepository;
+        this.questionsRepository = questionsRepository;
     }
 
     @Transactional
-    @Override
-    public boolean submitFormAnswers(Long formId, List<UserAnswer> userAnswers) {
+    public void submitFormAnswers(User user, List<UserAnswer> userAnswers) {
+        List<UserAnswer> readyToSaveUa = new ArrayList<>();
+        Form form = questionsRepository.findByAnswers_AnswerId(userAnswers.get(0).getAnswer().getAnswerId()).getForm();
+        FormResult formResult = formResultService.createFormResult(user, form);
 
-        for(UserAnswer userAnswer: userAnswers){
-            submitAnswer(formId, userAnswer);
+        for (UserAnswer ua : userAnswers) {
+            Question question = questionsRepository.findByAnswers_AnswerId(ua.getAnswer().getAnswerId());
+            ua.setUser(user);
+            ua.setQuestion(question);
+            ua.setForm(form);
+            ua.setUserForm(formResult);
+            readyToSaveUa.add(ua);
         }
-
-        Long userId = userAnswers.get(0).getUser().getId();
-
-        int score = scoreCounter(userId,formId);
-
-        // Обновляем общий балл пользователя
-        UserRanking userRanking = userRankingRepository.findByUserId(userId);
-        if (userRanking != null) {
-            userRanking.setTotalScore(userRanking.getTotalScore() + score);
-            userRankingRepository.save(userRanking);
-        } else {
-            userRanking = new UserRanking();
-            userRanking.setUser(userAnswers.get(0).getUser());
-            userRanking.setTotalScore(score);
-            userRankingRepository.save(userRanking);
-        }
-
-        return true;
+        userAnswerRepository.saveAll(readyToSaveUa);
     }
 
-    @Override
-    public UserAnswer submitAnswer(Long formId, UserAnswer userAnswer) {
-
-        Form form = formRepository.findById(formId)
-                .orElseThrow(() -> new EntityNotFoundException("Form not found with id: " + formId));
-
-        Question question = questionsRepository.findById(userAnswer.getQuestion().getQuestionId())
-                .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + userAnswer.getQuestion().getQuestionId()));
-
-        Answer answer = answerRepository.findById(userAnswer.getAnswer().getAnswerId())
-                .orElseThrow(() -> new EntityNotFoundException("Answer not found with id: " + userAnswer.getUserAnswerId()));
-
-        User user = userRepository.findById(userAnswer.getUser().getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userAnswer.getUser().getId()));
-
-        return userAnswerRepository.save(userAnswer);
-    }
 
 }

@@ -1,7 +1,11 @@
 package com.example.formmaker.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "user_table")
 @Getter
@@ -15,14 +19,22 @@ public class User {
     @Column
     private Long id;
 
-    @Column
+    @NotBlank
+    @Size(min = 5, max = 50)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column
+    @NotBlank
+    @Size(max = 100)
+    @Email(message = "Email должен быть корректен")
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @NotBlank
+    @Size(min = 8)
+    @Column(nullable = false)
     private String password;
 
+    @NotBlank
     private String roles;
 }

@@ -1,7 +1,6 @@
 package com.example.formmaker.security;
 
 import com.example.formmaker.entity.User;
-import com.example.formmaker.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public MyUserDetails(User user){
         this.user = user;
@@ -23,6 +22,10 @@ public class MyUserDetails implements UserDetails {
         return Arrays.stream(user.getRoles().split(", ")).
                 map(SimpleGrantedAuthority::new).
                 collect(Collectors.toList());
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
