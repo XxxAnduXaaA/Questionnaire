@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
-public class UserControllerImpl {
+public class UserController {
     private final UserService userService;
     private final FormResultService formResultService;
     private final FormService formService;
     private final FormResultRepository formResultRepository;
 
-    public UserControllerImpl(UserService userService, FormResultService formResultService, FormService formService, FormResultRepository formResultRepository) {
+    public UserController(UserService userService, FormResultService formResultService, FormService formService, FormResultRepository formResultRepository) {
         this.userService = userService;
         this.formResultService = formResultService;
         this.formService = formService;

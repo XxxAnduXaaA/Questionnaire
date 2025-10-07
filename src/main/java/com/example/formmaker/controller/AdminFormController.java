@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/adminPanel")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-public class AdminFormControllerImpl {
+public class AdminFormController {
     private final FormService formService;
     private final FormResultService formResultService;
     private final FormResultRepository formResultRepository;
     private final UserRepository userRepository;
 
-    public AdminFormControllerImpl(FormService formService, FormResultService formResultService, FormResultRepository formResultRepository, UserRepository userRepository) {
+    public AdminFormController(FormService formService, FormResultService formResultService, FormResultRepository formResultRepository, UserRepository userRepository) {
         this.formService = formService;
         this.formResultService = formResultService;
         this.formResultRepository = formResultRepository;

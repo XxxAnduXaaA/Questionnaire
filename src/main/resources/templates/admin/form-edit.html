@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редактировать форму</title>
+    <style>
+        .question-block { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        .option-block { margin-left: 20px; }
+    </style>
+</head>
+<body>
+<h1>Редактировать форму</h1>
+
+<form th:action="@{|/adminPanel/form/${form.formId}/edit|}" th:object="${form}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="hidden" name="_method" value="put"/>
+
+    <div>
+        <label for="title">Название</label>
+        <input type="text" id="title" th:field="*{title}" required/>
+    </div>
+
+    <div>
+        <label for="description">Описание</label>
+        <textarea id="description" th:field="*{description}"></textarea>
+    </div>
+
+    <h2>Вопросы</h2>
+    <div id="questions-container">
+        <!-- Отображение существующих вопросов -->
+        <div th:each="question, qStat : *{questions}" class="question-block" th:attr="data-qindex=${qStat.index}">
+            <label th:text="'Вопрос ' + ${qStat.index + 1}"></label>
+            <input type="text" th:field="*{questions[__${qStat.index}__].questionText}" required/>
+
+            <div class="options-container">
+                <div th:each="answer, aStat : *{questions[__${qStat.index}__].answers}" class="option-block">
+                    <label th:text="'Вариант ' + ${aStat.index + 1}"></label>
+                    <input type="text" th:field="*{questions[__${qStat.index}__].answers[__${aStat.index}__].answerText}"/>
+                    <!-- Удаление через класс, без inline onclick -->
+                    <button type="button" class="delete-option-button">Удалить</button>
+                </div>
+            </div>
+
+            <button type="button" th:attr="onclick=|addOption(${qStat.index})|">Добавить вариант</button>
+            <button type="button" th:attr="onclick=|removeQuestion(${qStat.index})|">Удалить вопрос</button>
+        </div>
+    </div>
+
+    <button type="button" onclick="addQuestion()">Добавить вопрос</button>
+
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+<a th:href="@{|/form/${form.formId}|}">К форме</a>
+
+<script>
+    let questionIndex = [[${#lists.size(form.questions)}]];
+
+    // Делегирование удаления опций — работает и для серверных, и для динамически добавленных элементов
+    document.getElementById('questions-container').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('delete-option-button')) {
+            const option = e.target.closest('.option-block');
+            if (!option) return;
+            const qDiv = option.closest('.question-block');
+            option.remove();
+            reindexQuestionByElement(qDiv);
+        }
+    });
+
+    function addQuestion() {
+        const container = document.getElementById("questions-container");
+        const idx = questionIndex++;
+        const qDiv = document.createElement("div");
+        qDiv.className = "question-block";
+        qDiv.setAttribute("data-qindex", idx);
+
+        qDiv.innerHTML = `
+      <label>Вопрос ${idx + 1}</label>
+      <input type="text" name="questions[${idx}].questionText" required/>
+      <div class="options-container">
+        <div class="option-block">
+          <label>Вариант 1</label>
+          <input type="text" name="questions[${idx}].answers[0].answerText"/>
+          <button type="button" class="delete-option-button">Удалить</button>
+        </div>
+      </div>
+      <button type="button" onclick="addOption(${idx})">Добавить вариант</button>
+      <button type="button" onclick="removeQuestion(${idx})">Удалить вопрос</button>
+    `;
+
+        container.appendChild(qDiv);
+    }
+
+    function addOption(qIndex) {
+        const qDiv = document.querySelector('[data-qindex="' + qIndex + '"]');
+        if (!qDiv) return;
+        const optionsContainer = qDiv.querySelector(".options-container");
+        const optionIndex = optionsContainer.querySelectorAll(".option-block").length;
+
+        const oDiv = document.createElement("div");
+        oDiv.className = "option-block";
+        oDiv.innerHTML = `
+      <label>Вариант ${optionIndex + 1}</label>
+      <input type="text" name="questions[${qIndex}].answers[${optionIndex}].answerText"/>
+      <button type="button" class="delete-option-button">Удалить</button>
+    `;
+        optionsContainer.appendChild(oDiv);
+    }
+
+    function removeQuestion(index) {
+        const qDiv = document.querySelector('[data-qindex="' + index + '"]');
+        if (!qDiv) return;
+        qDiv.remove();
+        reindexAllQuestions();
+    }
+
+    function reindexAllQuestions() {
+        const container = document.getElementById("questions-container");
+        const qBlocks = container.querySelectorAll(".question-block");
+        qBlocks.forEach((qEl, newIndex) => {
+            qEl.setAttribute("data-qindex", newIndex);
+            const label = qEl.querySelector("label");
+            if (label) label.textContent = `Вопрос ${newIndex + 1}`;
+            const qInput = qEl.querySelector('input[name^="questions"]');
+            if (qInput) qInput.setAttribute("name", `questions[${newIndex}].questionText`);
+            reindexQuestionByElement(qEl);
+        });
+        questionIndex = qBlocks.length;
+    }
+
+    // Перепривязка имён/меток для одной конкретной question-block
+    function reindexQuestionByElement(qDiv) {
+        if (!qDiv) return;
+        const qIndex = Array.from(document.querySelectorAll('.question-block')).indexOf(qDiv);
+        if (qIndex === -1) return;
+        qDiv.setAttribute('data-qindex', qIndex);
+
+        // Обновить имя для поля вопроса
+        const qInput = qDiv.querySelector('input[name^="questions"]');
+        if (qInput) qInput.setAttribute("name", `questions[${qIndex}].questionText`);
+
+        // Обновить опции
+        const options = qDiv.querySelectorAll(".option-block");
+        options.forEach((opt, i) => {
+            const input = opt.querySelector('input[name*="answers"]');
+            if (input) input.setAttribute("name", `questions[${qIndex}].answers[${i}].answerText`);
+            const label = opt.querySelector("label");
+            if (label) label.textContent = `Вариант ${i + 1}`;
+        });
+    }
+</script>
+</body>
+</html>
