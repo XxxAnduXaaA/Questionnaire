@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Панель администратора: Результаты форм</title>
+</head>
+<body>
+
+<h1>Результаты форм</h1>
+
+<!-- Фильтр по форме -->
+<form method="get" th:action="@{/adminPanel/form/results}">
+  <label for="formId">Выберите форму:</label>
+  <select id="formId" name="formId">
+    <option value="">Все формы</option>
+    <option th:each="f : ${forms}" th:value="${f.formId}" th:text="${f.title}"
+            th:selected="${param.formId == f.formId}"></option>
+  </select>
+
+  <!-- Фильтр по пользователю -->
+  <label for="userId">Выберите пользователя:</label>
+  <select id="userId" name="userId">
+    <option value="">Все пользователи</option>
+    <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"
+            th:selected="${param.userId == u.id}"></option>
+  </select>
+
+  <button type="submit">Фильтровать</button>
+</form>
+
+<hr/>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID FormResult</th>
+    <th>Форма</th>
+    <th>Пользователь</th>
+    <th>Дата заполнения</th>
+    <th>Действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="fr : ${results}">
+    <td th:text="${fr.id}"></td>
+    <td th:text="${fr.form.title}"></td>
+    <td th:text="${fr.user.username}"></td>
+    <td>
+      <span th:if="${fr.completedAt != null}"
+            th:text="${#temporals.format(fr.completedAt, 'yyyy-MM-dd HH:mm')}"></span>
+      <span th:unless="${fr.completedAt != null}">-</span>
+    </td>
+    <td>
+      <a th:href="@{/adminPanel/form/results/{id}(id=${fr.id})}">Просмотреть</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Пагинация -->
+<div th:if="${results.totalPages > 1}">
+  <ul>
+    <li th:each="i : ${#numbers.sequence(0, results.totalPages - 1)}">
+      <a th:href="@{/adminPanel/form/results(page=${i}, size=${results.size},
+             formId=${param.formId}, userId=${param.userId})}"
+         th:text="${i + 1}"
+         th:classappend="${i == currentPage} ? 'active'">1</a>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>

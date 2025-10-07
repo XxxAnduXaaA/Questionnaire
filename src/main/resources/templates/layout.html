@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'FormMaker'"></title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; margin: 0; background: #0b0f1a; color: #e5e7eb; }
+        a { color: #93c5fd; text-decoration: none; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+        header { background: #0f172a; border-bottom: 1px solid #1f2937; }
+        nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; }
+        .brand { font-weight: 700; color: #60a5fa; }
+        .nav-links { display: flex; gap: 16px; }
+        .card { background: #0f172a; border: 1px solid #1f2937; border-radius: 10px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+        .muted { color: #9ca3af; }
+        footer { margin-top: 40px; padding: 20px 0; color: #94a3b8; font-size: 14px; border-top: 1px solid #1f2937; }
+        .btn { display: inline-block; padding: 10px 14px; border-radius: 8px; background: #2563eb; color: white; border: none; cursor: pointer; }
+        .btn.secondary { background: #374151; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid #1f2937; }
+        th { text-align: left; color: #9ca3af; font-weight: 600; }
+        input, select, textarea { width: 100%; background: #0b1220; color: #e5e7eb; border: 1px solid #1f2937; border-radius: 8px; padding: 10px 12px; }
+        label { display: block; margin: 12px 0 6px; color: #cbd5e1; }
+        form .actions { margin-top: 16px; display: flex; gap: 10px; }
+    </style>
+    <th:block th:replace="~{fragments/head :: extra}"></th:block>
+    <th:block th:insert="~{::head}"></th:block>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="brand">FormMaker</div>
+        <div class="nav-links">
+            <a th:href="@{/}">Главная</a>
+            <a th:href="@{/forms}">Формы</a>
+            <a th:href="@{/adminPanel}" >Админка</a>
+            <a th:href="@{/templates/user/hello}">Профиль</a>
+            <a th:href="@{/logout}">Выход</a>
+        </div>
+    </nav>
+    <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+    <div class="container">
+        <p class="muted" th:text="${pageSubtitle}"></p>
+    </div>
+</header>
+<head th:fragment="head"></head>
+<main th:fragment="content"></main>
+<div th:fragment="scripts"></div>
+
+<main class="container">
+    <div class="content" th:insert="~{::content}"></div>
+    <th:block th:replace="~{::content}"></th:block>
+    <div class="card" th:if="${flash}">
+        <p th:text="${flash}"></p>
+    </div>
+    <th:block th:replace="~{fragments/toast :: toast}"></th:block>
+    <th:block th:replace="~{fragments/scripts :: extra}"></th:block>
+    <script th:src="@{/js/main.js}"></script>
+    <th:block th:insert="~{::scripts}"></th:block>
+</main>
+
+<footer class="container">
+    <div>© <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> FormMaker</div>
+    <div class="muted">Spring MVC + Thymeleaf</div>
+</footer>
+</body>
+</html>
+
+
+

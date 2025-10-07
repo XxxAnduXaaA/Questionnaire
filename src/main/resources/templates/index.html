@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Главная - FormMaker'"></title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="brand">FormMaker</div>
+        <div class="nav-links">
+            <a th:href="@{/}">Главная</a>
+            <a th:href="@{/forms}">Формы</a>
+            <a th:href="@{/adminPanel/form}">Админка</a>
+            <a th:href="@{'/' + ${user.getId()} + '/profile'}">Профиль</a>
+            <a th:href="@{/logout}">Выход</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="card">
+        <h1>FormMaker</h1>
+        <p class="muted">Создавайте формы и проходите тесты.</p>
+        <div class="actions">
+            <a class="btn" th:href="@{/forms}">К списку форм</a>
+            <a class="btn secondary" th:href="@{'/' + ${user.getId()} + '/profile'}">Профиль</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Популярные формы</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Вопросы</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="form : ${forms}">
+                <td th:text="${form.title}"></td>
+                <td th:text="${#lists.size(form.questions)}"></td>
+                <td><a class="btn" th:href="@{'/form/' + ${form.formId}}">Открыть</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="container">
+    <div>© <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> FormMaker</div>
+    <div class="muted">Spring MVC + Thymeleaf</div>
+</footer>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

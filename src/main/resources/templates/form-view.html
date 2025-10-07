@@ -1,0 +1,43 @@
+    <!DOCTYPE html>
+    <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head :: head('Прохождение формы')}"><meta charset="UTF-8"></head>
+    <body>
+    <div class="container">
+        <a th:href="@{/forms}">← Ко всем формам</a>
+        <h1 th:text="${form.title}">Форма</h1>
+
+        <form class="card" method="post" th:action="@{'/form/' + ${form.formId}}" th:object="${formAnswersDto}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div th:each="q,qi : ${form.questions}">
+                <h3 th:text="${qi.index + 1} + '. ' + ${q.questionText}"></h3>
+
+                <input type="hidden"
+                       th:field="*{userAnswers[__${qi.index}__].question.questionId}"
+                       th:value="${q.questionId}"/>
+
+                <input type="hidden"
+                       th:field="*{userAnswers[__${qi.index}__].form.formId}"
+                       th:value="${form.formId}"/>
+
+
+                <div th:each="a, ai : ${q.answers}">
+                    <label>
+                        <input type="radio"
+                               th:field="*{userAnswers[__${qi.index}__].answer.answerId}"
+                               th:value="${a.answerId}" required/>
+                        <span th:text="${a.answerText}"></span>
+                    </label>
+                    <!-- фиксируем questionId -->
+<!--                    <input type="hidden"-->
+<!--                           th:field="*{userAnswers[__${qi.index}__].question.questionId}"-->
+<!--                           th:value="${q.questionId}"/>-->
+                </div>
+            </div>
+            <button type="submit">Отправить ответы</button>
+        </form>
+    </div>
+    </body>
+    </html>
+
+
+
