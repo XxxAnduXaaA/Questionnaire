@@ -18,9 +18,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/adminPanel")
+@RequestMapping("/admin-Panel")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminFormController {
+
     private final FormService formService;
     private final FormResultService formResultService;
     private final FormResultRepository formResultRepository;
