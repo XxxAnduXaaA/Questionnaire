@@ -16,6 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column

@@ -24,7 +24,7 @@ public class FormResultServiceImpl implements FormResultService {
     }
 
     @Override
-    public Page<FormResult> getCompletedFormsByForm(int page, int size, Long formId){
+    public Page<FormResult> getCompletedFormsByForm(int page, int size, Long formId) {
         return formResultRepository.findAllByForm_FormId(PageRequest.of(page, size, Sort.by("completedAt").descending()), formId);
     }
 

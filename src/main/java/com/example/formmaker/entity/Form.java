@@ -20,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Form {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long formId;

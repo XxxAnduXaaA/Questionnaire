@@ -5,6 +5,7 @@ import com.example.formmaker.entity.User;
 import com.example.formmaker.service.FormService;
 import com.example.formmaker.service.UserAnswerService;
 import com.example.formmaker.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 
+@RequiredArgsConstructor
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
 public class FormController {
@@ -22,12 +24,6 @@ public class FormController {
     private final FormService formService;
     private final UserAnswerService userAnswerService;
     private final UserService userService;
-
-    public FormController(FormService formService, UserAnswerService userAnswerService, UserService userService) {
-        this.formService = formService;
-        this.userAnswerService = userAnswerService;
-        this.userService = userService;
-    }
 
     @GetMapping("/forms")
     public String getForms(Model model) {

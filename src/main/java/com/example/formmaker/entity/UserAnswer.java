@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAnswer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userAnswerId;

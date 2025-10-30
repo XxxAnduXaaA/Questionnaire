@@ -7,6 +7,7 @@ import com.example.formmaker.repository.FormResultRepository;
 import com.example.formmaker.service.FormResultService;
 import com.example.formmaker.service.FormService;
 import com.example.formmaker.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,20 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
 public class UserController {
+
     private final UserService userService;
     private final FormResultService formResultService;
     private final FormService formService;
     private final FormResultRepository formResultRepository;
-
-    public UserController(UserService userService, FormResultService formResultService, FormService formService, FormResultRepository formResultRepository) {
-        this.userService = userService;
-        this.formResultService = formResultService;
-        this.formService = formService;
-        this.formResultRepository = formResultRepository;
-    }
 
     @GetMapping("/{userId}/profile")
     public String getProfile(@PathVariable Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {

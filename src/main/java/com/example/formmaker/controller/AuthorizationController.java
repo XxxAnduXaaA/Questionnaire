@@ -3,6 +3,7 @@ package com.example.formmaker.controller;
 import com.example.formmaker.repository.UserRepository;
 import com.example.formmaker.service.UserService;
 import jakarta.persistence.EntityExistsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,16 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.formmaker.entity.User;
 
+@RequiredArgsConstructor
 @Controller
 public class AuthorizationController {
 
     private final UserRepository userRepository;
     private final UserService userService;
-
-    public AuthorizationController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-    }
 
     @GetMapping("/login")
     public String getAuthorizationPage() {

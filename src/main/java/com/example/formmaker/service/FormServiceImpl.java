@@ -2,6 +2,7 @@ package com.example.formmaker.service;
 
 import com.example.formmaker.entity.*;
 import com.example.formmaker.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,18 +10,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class FormServiceImpl implements FormService {
 
     private final FormRepository formRepository;
     private final UserAnswerRepository userAnswerRepository;
     private final FormResultRepository formResultRepository;
-
-    public FormServiceImpl(FormRepository formRepository, UserAnswerRepository userAnswerRepository, FormResultRepository formResultRepository) {
-        this.formRepository = formRepository;
-        this.userAnswerRepository = userAnswerRepository;
-        this.formResultRepository = formResultRepository;
-    }
 
     public Form createForm(Form form) {
         return formRepository.save(form);

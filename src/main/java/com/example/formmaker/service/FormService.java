@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FormService {
+
     Form createForm(Form form);
     List<Form> getAllForms();
     Optional<Form> getFormByTitle(String title);

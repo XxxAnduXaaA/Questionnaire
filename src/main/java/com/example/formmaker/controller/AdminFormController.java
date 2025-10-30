@@ -6,6 +6,7 @@ import com.example.formmaker.repository.UserRepository;
 import com.example.formmaker.service.FormResultService;
 import com.example.formmaker.service.FormService;
 import jakarta.persistence.EntityExistsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,19 +21,13 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/admin-Panel")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 public class AdminFormController {
 
     private final FormService formService;
     private final FormResultService formResultService;
     private final FormResultRepository formResultRepository;
     private final UserRepository userRepository;
-
-    public AdminFormController(FormService formService, FormResultService formResultService, FormResultRepository formResultRepository, UserRepository userRepository) {
-        this.formService = formService;
-        this.formResultService = formResultService;
-        this.formResultRepository = formResultRepository;
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/form")
     public String getFormPanel(Model model) {
@@ -93,21 +88,17 @@ public class AdminFormController {
     }
 
     @GetMapping("/form/results")
-    public String getFormsResult(@RequestParam(value = "formId", required = false) Long formId, @RequestParam(value = "userId", required = false) Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size , Model model) {
+    public String getFormsResult(@RequestParam(value = "formId", required = false) Long formId, @RequestParam(value = "userId", required = false) Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
 
         Page<FormResult> results;
 
         if (formId != null) {
 //            model.addAttribute("formResults", formResultService.getCompletedFormsByForm(page, size, formId));
             results = formResultService.getCompletedFormsByForm(page, size, formId);
-        }
-
-        else if(userId != null){
+        } else if (userId != null) {
 //            model.addAttribute("userResults", formResultService.getCompletedFormsByUser(page, size, userId));
             results = formResultService.getCompletedFormsByUser(page, size, userId);
-        }
-
-        else{
+        } else {
             results = formResultService.getAllCompletedForms(page, size);
         }
 
