@@ -1,12 +1,13 @@
 package com.example.formmaker.service;
 
 import com.example.formmaker.entity.*;
-import com.example.formmaker.repository.*;
+import com.example.formmaker.repository.FormRepository;
+import com.example.formmaker.repository.FormResultRepository;
+import com.example.formmaker.repository.UserAnswerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
