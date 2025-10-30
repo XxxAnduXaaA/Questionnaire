@@ -4,19 +4,17 @@ import com.example.formmaker.entity.Form;
 import com.example.formmaker.entity.FormResult;
 import com.example.formmaker.entity.User;
 import com.example.formmaker.repository.FormResultRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
+@RequiredArgsConstructor
 @Service
 public class FormResultServiceImpl implements FormResultService {
-    private final FormResultRepository formResultRepository;
 
-    public FormResultServiceImpl(FormResultRepository formResultRepository) {
-        this.formResultRepository = formResultRepository;
-    }
+    private final FormResultRepository formResultRepository;
 
     @Override
     public Page<FormResult> getCompletedFormsByUser(int page, int size, Long userId) {
