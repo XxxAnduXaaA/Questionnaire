@@ -22,7 +22,6 @@ public class IndexController {
     public String indexPage(Model model, @AuthenticationPrincipal MyUserDetails userDetails){
         model.addAttribute("forms", formService.getAllForms());
         model.addAttribute("user", userDetails.getUser());
-
         return "index";
     }
 
