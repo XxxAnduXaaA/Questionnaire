@@ -44,5 +44,4 @@ public class FormController {
         model.addAttribute("formAnswersDto", new FormAnswersDto());
         return "form-view";
     }
-
 }
