@@ -11,10 +11,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class FormResult {
 
     @Id
