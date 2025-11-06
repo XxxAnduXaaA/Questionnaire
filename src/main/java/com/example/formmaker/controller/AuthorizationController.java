@@ -1,9 +1,7 @@
 package com.example.formmaker.controller;
 
 import com.example.formmaker.entity.User;
-import com.example.formmaker.repository.UserRepository;
 import com.example.formmaker.service.UserService;
-import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthorizationController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
 
     @GetMapping("/login")
@@ -31,11 +28,7 @@ public class AuthorizationController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new EntityExistsException("Такой email уже существует");
-        }
         userService.createUser(user);
         return "redirect:/login";
     }
-
 }
