@@ -7,10 +7,15 @@ import java.util.Optional;
 
 public interface FormService {
 
-    Form createForm(Form form);
+    void createForm(Form form);
+
+    Form createBlankForm();
+
     List<Form> getAllForms();
     Optional<Form> getFormByTitle(String title);
     Form getFormById(Long formId);
-    Form updateFormById(Long formId, Form updatedForm);
+
+    void updateFormById(Long formId, Form updatedForm);
+
     void deleteFormById(Long formId);
 }
