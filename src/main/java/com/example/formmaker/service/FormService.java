@@ -12,7 +12,9 @@ public interface FormService {
     Form createBlankForm();
 
     List<Form> getAllForms();
+
     Optional<Form> getFormByTitle(String title);
+
     Form getFormById(Long formId);
 
     void updateFormById(Long formId, Form updatedForm);
