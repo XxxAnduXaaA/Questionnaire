@@ -1,11 +1,10 @@
 package com.example.formmaker.controller;
 
-import com.example.formmaker.entity.*;
-import com.example.formmaker.repository.FormResultRepository;
-import com.example.formmaker.repository.UserRepository;
+import com.example.formmaker.dto.FormResultsRequestDto;
+import com.example.formmaker.entity.Form;
+import com.example.formmaker.entity.FormResult;
 import com.example.formmaker.service.FormResultService;
 import com.example.formmaker.service.FormService;
-import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,13 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Controller
-@RequestMapping("/admin-Panel")
+@RequestMapping("/admin-panel")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequiredArgsConstructor
 public class AdminFormController {
@@ -66,7 +60,7 @@ public class AdminFormController {
             }
         }
         formService.createForm(form);
-        return "redirect:/adminPanel/form";
+        return "redirect:/admin-panel/form";
     }
 
     @GetMapping("/form/{formId}/edit")
@@ -84,7 +78,7 @@ public class AdminFormController {
     @DeleteMapping("/form/{formId}")
     public String deleteFormById(@PathVariable Long formId) {
         formService.deleteFormById(formId);
-        return "redirect:/adminPanel/forms";
+        return "redirect:/admin-panel/forms";
     }
 
     @GetMapping("/form/results")
