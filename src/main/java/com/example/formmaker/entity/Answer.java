@@ -11,10 +11,6 @@ import java.util.Objects;
 
 @Data
 @Table(name = "answer_table")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Answer {
 
