@@ -1,6 +1,8 @@
 package com.example.formmaker.service;
 
 import com.example.formmaker.entity.User;
+import com.example.formmaker.exception.UserException;
+import com.example.formmaker.exception.UserRoles;
 import com.example.formmaker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,28 +19,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId).orElseThrow(() -> UserException.USER_NOT_FOUND(userId));
     }
 
     @Override
     public User createUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw UserException.EMAIL_ALREADY_TAKEN(user.getEmail());
+        }
+
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
         if (optionalUser.isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles("ROLE_USER");
             return userRepository.save(user);
         }
-        throw new RuntimeException("Email " + user.getEmail() + "already in use");
+        throw UserException.EMAIL_ALREADY_TAKEN(user.getEmail());
     }
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with " + email + " not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> UserException.EMAIL_NOT_FOUND(email));
     }
 
     @Override
     public User changeUserInfo(Long userId, User updatedUser) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with " + userId + " not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> UserException.USER_NOT_FOUND(userId));
 
         if (updatedUser.getUsername() != null
                 && !updatedUser.getUsername().isBlank()
