@@ -1,15 +1,12 @@
 package com.example.formmaker.dto;
 
 import com.example.formmaker.entity.UserAnswer;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class FormAnswersDto {
-
     private Long formId;
     private List<UserAnswer> userAnswers;
 }
