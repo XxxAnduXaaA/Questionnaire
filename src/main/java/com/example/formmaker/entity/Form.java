@@ -11,10 +11,6 @@ import java.util.List;
 
 @Data
 @Table(name = "form_table")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Form {
 
