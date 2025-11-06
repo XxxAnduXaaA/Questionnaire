@@ -20,8 +20,6 @@ public class AdminFormController {
 
     private final FormService formService;
     private final FormResultService formResultService;
-    private final FormResultRepository formResultRepository;
-    private final UserRepository userRepository;
 
     @GetMapping("/form")
     public String getFormPanel(Model model) {
