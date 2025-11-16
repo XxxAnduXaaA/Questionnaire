@@ -18,10 +18,12 @@ public class UserAnswerServiceImpl implements UserAnswerService {
     private final QuestionsRepository questionsRepository;
     private final FormResultService formResultService;
 
-    @Transactional
     public void submitFormAnswers(User user, List<UserAnswer> userAnswers) {
-        List<UserAnswer> readyToSaveUa = new ArrayList<>();
-        Form form = questionsRepository.findByAnswers_AnswerId(userAnswers.get(0).getAnswer().getAnswerId()).getForm();
+        if (user == null || userAnswers.isEmpty() || userAnswers.get(0).getAnswer() == null) {
+            throw FormResultException.DATA_IS_NULL();
+        }
+
+        Form form = questionsRepository.findByAnswersAnswerId(userAnswers.get(0).getAnswer().getAnswerId()).getForm();
         FormResult formResult = formResultService.createFormResult(user, form);
 
         List<UserAnswer> readyToSaveUa = userAnswers.stream().map(
