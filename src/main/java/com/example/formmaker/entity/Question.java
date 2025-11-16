@@ -15,8 +15,7 @@ import java.util.Objects;
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
     @Override

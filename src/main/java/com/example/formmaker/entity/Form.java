@@ -15,7 +15,7 @@ import java.util.List;
 public class Form {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long formId;
 
     @Column(nullable = false, unique = true)
