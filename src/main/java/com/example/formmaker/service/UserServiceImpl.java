@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,14 +46,12 @@ public class UserServiceImpl implements UserService {
             user.setUsername(updatedUser.getUsername());
         }
 
-        // Email
         if (updatedUser.getEmail() != null
                 && !updatedUser.getEmail().isBlank()
                 && !updatedUser.getEmail().equals(user.getEmail())) {
             user.setEmail(updatedUser.getEmail());
         }
 
-        // Пароль
         if (updatedUser.getPassword() != null
                 && !updatedUser.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
