@@ -1,21 +1,13 @@
 package com.example.formmaker.controller;
 
-import com.example.formmaker.entity.FormResult;
 import com.example.formmaker.entity.User;
-import com.example.formmaker.entity.UserAnswer;
-import com.example.formmaker.repository.FormResultRepository;
 import com.example.formmaker.service.FormResultService;
-import com.example.formmaker.service.FormService;
 import com.example.formmaker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -25,8 +17,6 @@ public class UserController {
 
     private final UserService userService;
     private final FormResultService formResultService;
-    private final FormService formService;
-    private final FormResultRepository formResultRepository;
 
     @GetMapping
     public String getProfile(
@@ -54,5 +44,4 @@ public class UserController {
         model.addAttribute("answersByQuestion", answersByQuestion);
         return "user/userForm";
     }
-
 }
