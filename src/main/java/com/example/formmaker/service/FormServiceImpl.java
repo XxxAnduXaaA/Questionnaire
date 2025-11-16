@@ -1,13 +1,16 @@
 package com.example.formmaker.service;
 
-import com.example.formmaker.entity.*;
+import com.example.formmaker.entity.Answer;
+import com.example.formmaker.entity.Form;
+import com.example.formmaker.entity.Question;
+import com.example.formmaker.exception.FormException;
 import com.example.formmaker.repository.FormRepository;
-import com.example.formmaker.repository.FormResultRepository;
 import com.example.formmaker.repository.UserAnswerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +20,36 @@ public class FormServiceImpl implements FormService {
 
     private final FormRepository formRepository;
     private final UserAnswerRepository userAnswerRepository;
-    private final FormResultRepository formResultRepository;
 
-    public Form createForm(Form form) {
-        return formRepository.save(form);
+    public void createForm(Form form) {
+        if (getFormByTitle(form.getTitle()).isPresent()) {
+            throw FormException.FORM_NAME_ALREADY_TAKEN(form.getTitle());
+        }
+
+        for (Question q : form.getQuestions()) {
+            q.setForm(form);
+            for (Answer a : q.getAnswers()) {
+                a.setQuestion(q);
+            }
+        }
+        formRepository.save(form);
+    }
+
+    public Form createBlankForm() {
+        Form form = new Form();
+        Question q = new Question();
+        Answer a = new Answer();
+
+        form.setQuestions(new ArrayList<>());
+        form.getQuestions().add(q);
+
+        q.setForm(form);
+        q.setAnswers((new ArrayList<>()));
+        q.getAnswers().add(a);
+
+        a.setQuestion(q);
+
+        return form;
     }
 
     public List<Form> getAllForms() {
