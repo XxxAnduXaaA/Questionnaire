@@ -1,7 +1,5 @@
 package com.example.formmaker.exception;
 
-import com.example.formmaker.entity.User;
-
 public final class UserException extends RuntimeException {
 
     public static RuntimeException EMAIL_ALREADY_TAKEN(String email){
