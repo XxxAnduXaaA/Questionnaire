@@ -52,14 +52,4 @@ public class SecurityConfig {
                         .maximumSessions(1))
                 .build();
     }
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf(AbstractHttpConfigurer::disable)   // отключаем CSRF
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // все запросы разрешены
-//                .formLogin(AbstractHttpConfigurer::disable)   // убираем форму логина
-//                .httpBasic(AbstractHttpConfigurer::disable);  // убираем basic-auth
-//
-//        return http.build();
-//    }
-
-    }
+}
