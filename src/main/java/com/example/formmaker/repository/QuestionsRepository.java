@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuestionsRepository extends JpaRepository<Question, Long> {
 
-    Question findByAnswers_AnswerId(Long answerId);
+    Question findByAnswersAnswerId(Long answerId);
 }

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    void deleteAllByQuestion_QuestionId(Long id);
+    void deleteAllByQuestionQuestionId(Long id);
 }

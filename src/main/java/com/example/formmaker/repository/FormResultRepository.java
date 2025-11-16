@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface FormResultRepository extends JpaRepository<FormResult, Long> {
 
     Page<FormResult> findAllByUserId(Pageable pageable, Long userId);
-    Page<FormResult> findAllByForm_FormId(Pageable pageable, Long formId);
-    List<FormResult> findAllByForm_FormId(Long formId);
-    @Override
+
+    Page<FormResult> findAllByFormFormId(Pageable pageable, Long formId);
+
     Optional<FormResult> findById(Long userFormId);
 
     Page<FormResult> findAll(Pageable pageable);
