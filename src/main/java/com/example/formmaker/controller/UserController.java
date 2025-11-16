@@ -35,13 +35,7 @@ public class UserController {
 
     @GetMapping("/{userFormId}")
     public String getUserFormPage(@PathVariable Long userId, @PathVariable Long userFormId, Model model) {
-        FormResult formResult = formResultRepository.findById(userFormId).orElseThrow(() -> new RuntimeException("FormResult with " + userFormId + " not found"));
-        model.addAttribute("form", formResult.getForm());
-        List<UserAnswer> userAnswers = formResult.getAnswers();
-        Map<Long, List<UserAnswer>> answersByQuestion = userAnswers.stream()
-                .collect(Collectors.groupingBy(ua -> ua.getQuestion().getQuestionId()));
-
-        model.addAttribute("answersByQuestion", answersByQuestion);
+        formResultService.getUserFormPage(userFormId, model);
         return "user/userForm";
     }
 }
