@@ -77,6 +77,6 @@ public class FormResultServiceImpl implements FormResultService {
         FormResult formResult = new FormResult();
         formResult.setForm(form);
         formResult.setUser(user);
-        return formResultRepository.save(formResult);
+        return formResult;
     }
 }
