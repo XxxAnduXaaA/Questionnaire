@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
+@RequestMapping("/{userId}/profile")
 public class UserController {
 
     private final UserService userService;
@@ -27,21 +28,22 @@ public class UserController {
     private final FormService formService;
     private final FormResultRepository formResultRepository;
 
-    @GetMapping("/{userId}/profile")
-    public String getProfile(@PathVariable Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
+    @GetMapping
+    public String getProfile(
+            @PathVariable Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
         User user = userService.getUserById(userId);
         model.addAttribute("completedForms", formResultService.getCompletedFormsByUser(page, size, userId));
         model.addAttribute("currentUser", user);
         return "user/profile";
     }
 
-    @PutMapping("/{userId}/profile")
+    @PutMapping
     public String changeUserInfo(@PathVariable Long userId, @ModelAttribute("currentUser") User updatedUser) {
         userService.changeUserInfo(userId, updatedUser);
         return "user/profile";
     }
 
-    @GetMapping("/{userId}/profile/{userFormId}")
+    @GetMapping("/{userFormId}")
     public String getUserFormPage(@PathVariable Long userId, @PathVariable Long userFormId, Model model) {
         FormResult formResult = formResultRepository.findById(userFormId).orElseThrow(() -> new RuntimeException("FormResult with " + userFormId + " not found"));
         model.addAttribute("form", formResult.getForm());
