@@ -17,7 +17,7 @@ public interface FormService {
 
     Form getFormById(Long formId);
 
-    void updateFormById(Long formId, Form updatedForm);
+    Form updateFormById(Long formId, Form updatedForm);
 
     void deleteFormById(Long formId);
 }
