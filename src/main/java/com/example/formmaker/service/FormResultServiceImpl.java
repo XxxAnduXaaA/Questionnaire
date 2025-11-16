@@ -66,7 +66,7 @@ public class FormResultServiceImpl implements FormResultService {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", results.getTotalPages());
         model.addAttribute(Attribute.FORMS, formService.getAllForms());
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute(Attribute.USERS, userRepository.findAll());
     }
 
     @Override
