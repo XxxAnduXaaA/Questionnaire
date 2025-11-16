@@ -35,6 +35,9 @@ public class FormResultServiceImpl implements FormResultService {
 
     @Override
     public FormResult createFormResult(User user, Form form) {
+        if (user == null || form == null) {
+            throw FormException.USER_OR_FORM_IS_NULL();
+        }
         FormResult formResult = new FormResult();
         formResult.setForm(form);
         formResult.setUser(user);
