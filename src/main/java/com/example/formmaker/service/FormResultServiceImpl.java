@@ -1,5 +1,7 @@
 package com.example.formmaker.service;
 
+import com.example.formmaker.constant.Attribute;
+import com.example.formmaker.dto.FormResultsRequestDto;
 import com.example.formmaker.entity.Form;
 import com.example.formmaker.entity.FormResult;
 import com.example.formmaker.entity.User;
@@ -26,6 +28,9 @@ public class FormResultServiceImpl implements FormResultService {
         return formResultRepository.findAllByForm_FormId(PageRequest.of(page, size, Sort.by("completedAt").descending()), formId);
         return formResultRepository.findAllByFormFormId(PageRequest.of(page, size, Sort.by("completedAt").descending()), formId);
     }
+        model.addAttribute(Attribute.FORMS, formService.getAllForms());
+        model.addAttribute(Attribute.USERS, userRepository.findAll());
+        model.addAttribute(Attribute.FORM, formResult.getForm());
     }
 
     @Override
