@@ -5,9 +5,9 @@
     <title>Все формы</title>
 </head>
 <body>
-<a th:href="@{/adminPanel/form/new}">Создать новую форму</a>
+<a th:href="@{/admin-panel/form/new}">Создать новую форму</a>
 <br/>
-<a th:href="@{/adminPanel/form/results}">Все результаты форм</a>
+<a th:href="@{/admin-panel/form/results}">Все результаты форм</a>
 <h1>Формы</h1>
 
 <table>
@@ -26,9 +26,9 @@
         <td th:text="${form.description}">Описание</td>
         <td>
             <a th:href="@{|/form/${form.formId}|}">Просмотр</a>
-            <a th:href="@{|/adminPanel/form/${form.formId}/edit|}">Редактировать</a>
+            <a th:href="@{|/admin-panel/form/${form.formId}/edit|}">Редактировать</a>
 
-            <form th:action="@{|/adminPanel/form/${form.formId}|}" method="post" style="display:inline">
+            <form th:action="@{|/admin-panel/form/${form.formId}|}" method="post" style="display:inline">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit">Удалить</button>
             </form>
@@ -37,7 +37,7 @@
     </tbody>
 </table>
 
-<a th:href="@{/adminPanel/form/new}">Создать новую форму</a>
+<a th:href="@{/admin-panel/form/new}">Создать новую форму</a>
 </body>
 </html>
 

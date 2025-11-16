@@ -3,7 +3,7 @@
     <head th:replace="~{fragments/head :: head('Прохождение формы')}"><meta charset="UTF-8"></head>
     <body>
     <div class="container">
-        <a th:href="@{/forms}">← Ко всем формам</a>
+        <a th:href="@{/form}">← Ко всем формам</a>
         <h1 th:text="${form.title}">Форма</h1>
 
         <form class="card" method="post" th:action="@{'/form/' + ${form.formId}}" th:object="${formAnswersDto}">
@@ -12,11 +12,11 @@
                 <h3 th:text="${qi.index + 1} + '. ' + ${q.questionText}"></h3>
 
                 <input type="hidden"
-                       th:field="*{userAnswers[__${qi.index}__].question.questionId}"
+                       th:field="*{userAnswers[__${qi.index}__].answer.question.questionId}"
                        th:value="${q.questionId}"/>
 
                 <input type="hidden"
-                       th:field="*{userAnswers[__${qi.index}__].form.formId}"
+                       th:field="*{userAnswers[__${qi.index}__].userForm.form.formId}"
                        th:value="${form.formId}"/>
 
 
