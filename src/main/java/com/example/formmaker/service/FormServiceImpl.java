@@ -90,10 +90,6 @@ public class FormServiceImpl implements FormService {
     @Transactional
     @Override
     public void deleteFormById(Long formId) {
-        List<UserAnswer> userAnswers = userAnswerRepository.findAllByQuestion_Form_FormId(formId);
-        userAnswerRepository.deleteAll(userAnswers);
-        List<FormResult> formResults = formResultRepository.findAllByForm_FormId(formId);
-        formResultRepository.deleteAll(formResults);
         formRepository.deleteById(formId);
     }
 }
