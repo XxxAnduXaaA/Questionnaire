@@ -9,9 +9,9 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
 @Table(name = "form_table")
 @Entity
+@Data
 public class Form {
 
     @Id

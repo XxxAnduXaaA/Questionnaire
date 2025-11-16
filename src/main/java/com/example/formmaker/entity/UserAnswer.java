@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data
 @Table(name = "user_answer_table")
 @Entity
+@Data
 public class UserAnswer {
 
     @Id

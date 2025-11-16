@@ -7,11 +7,11 @@ import jakarta.validation.Valid;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @Table(name = "question_table")
 @Entity
+@Data
 public class Question {
 
     @Id
