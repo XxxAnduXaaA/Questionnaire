@@ -68,11 +68,11 @@ public class FormServiceImpl implements FormService {
 
         existingForm.getQuestions().removeIf(q -> {
             if (!updatedQuestions.contains(q)) {
-                userAnswerRepository.deleteAllByQuestion_QuestionId(q.getQuestionId());
+                userAnswerRepository.deleteAllByAnswerQuestionQuestionId(q.getQuestionId());
 
                 if (q.getAnswers() != null) {
                     for (Answer a : q.getAnswers()) {
-                        userAnswerRepository.deleteAllByAnswer_AnswerId(a.getAnswerId());
+                        userAnswerRepository.deleteAllByAnswerAnswerId(a.getAnswerId());
                     }
                 }
                 return true; // удаляем вопрос из коллекции
