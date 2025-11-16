@@ -1,5 +1,6 @@
 package com.example.formmaker.controller;
 
+import com.example.formmaker.constant.Attribute;
 import com.example.formmaker.dto.FormResultsRequestDto;
 import com.example.formmaker.entity.Form;
 import com.example.formmaker.entity.FormResult;
@@ -23,14 +24,14 @@ public class AdminFormController {
 
     @GetMapping("/form")
     public String getFormPanel(Model model) {
-        model.addAttribute("forms", formService.getAllForms());
+        model.addAttribute(Attribute.FORMS, formService.getAllForms());
         return "admin/forms";
     }
 
     @GetMapping("/form/new")
     public String getFormCreator(Model model) {
         Form form = formService.createBlankForm();
-        model.addAttribute("form", form);
+        model.addAttribute(Attribute.FORM, form);
         return "admin/form-create";
     }
 
@@ -42,7 +43,7 @@ public class AdminFormController {
 
     @GetMapping("/form/{formId}/edit")
     public String getFormUpdater(@PathVariable Long formId, Model model) {
-        model.addAttribute("form", formService.getFormById(formId));
+        model.addAttribute(Attribute.FORM, formService.getFormById(formId));
         return "admin/form-edit";
     }
 

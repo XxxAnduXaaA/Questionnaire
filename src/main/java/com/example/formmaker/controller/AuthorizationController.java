@@ -1,5 +1,6 @@
 package com.example.formmaker.controller;
 
+import com.example.formmaker.constant.Attribute;
 import com.example.formmaker.entity.User;
 import com.example.formmaker.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class AuthorizationController {
 
     @GetMapping("/registration")
     public String getRegistration(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute(Attribute.USER, new User());
         return "register";
     }
 

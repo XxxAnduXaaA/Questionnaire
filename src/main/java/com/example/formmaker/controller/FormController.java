@@ -1,5 +1,6 @@
 package com.example.formmaker.controller;
 
+import com.example.formmaker.constant.Attribute;
 import com.example.formmaker.dto.FormAnswersDto;
 import com.example.formmaker.entity.User;
 import com.example.formmaker.service.FormService;
@@ -27,7 +28,7 @@ public class FormController {
 
     @GetMapping("/forms")
     public String getForms(Model model) {
-        model.addAttribute("forms", formService.getAllForms());
+        model.addAttribute(Attribute.FORMS, formService.getAllForms());
         return "forms";
     }
 
@@ -40,7 +41,7 @@ public class FormController {
 
     @GetMapping("/form/{formId}")
     public String getForm(@PathVariable Long formId, Model model) {
-        model.addAttribute("form", formService.getFormById(formId));
+        model.addAttribute(Attribute.FORM, formService.getFormById(formId));
         model.addAttribute("formAnswersDto", new FormAnswersDto());
         return "form-view";
     }

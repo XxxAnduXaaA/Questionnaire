@@ -1,5 +1,6 @@
 package com.example.formmaker.controller;
 
+import com.example.formmaker.constant.Attribute;
 import com.example.formmaker.security.MyUserDetails;
 import com.example.formmaker.service.FormService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,9 @@ public class IndexController {
     private final FormService formService;
 
     @GetMapping("/")
-    public String indexPage(Model model, @AuthenticationPrincipal MyUserDetails userDetails){
-        model.addAttribute("forms", formService.getAllForms());
-        model.addAttribute("user", userDetails.getUser());
+    public String indexPage(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+        model.addAttribute(Attribute.FORMS, formService.getAllForms());
+        model.addAttribute(Attribute.USER, userDetails.getUser());
         return "index";
     }
 }
