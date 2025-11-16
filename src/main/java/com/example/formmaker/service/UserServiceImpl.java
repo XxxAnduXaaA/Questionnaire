@@ -1,8 +1,8 @@
 package com.example.formmaker.service;
 
+import com.example.formmaker.constant.UserRoles;
 import com.example.formmaker.entity.User;
 import com.example.formmaker.exception.UserException;
-import com.example.formmaker.exception.UserRoles;
 import com.example.formmaker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,13 +28,9 @@ public class UserServiceImpl implements UserService {
             throw UserException.EMAIL_ALREADY_TAKEN(user.getEmail());
         }
 
-        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
-        if (optionalUser.isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles("ROLE_USER");
-            return userRepository.save(user);
-        }
-        throw UserException.EMAIL_ALREADY_TAKEN(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(UserRoles.USER);
+        return userRepository.save(user);
     }
 
     @Override
@@ -64,7 +60,6 @@ public class UserServiceImpl implements UserService {
                 && !updatedUser.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
-
         return userRepository.save(user);
     }
 }
