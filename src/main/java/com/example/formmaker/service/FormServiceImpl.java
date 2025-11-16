@@ -24,7 +24,7 @@ public class FormServiceImpl implements FormService {
     }
 
     public List<Form> getAllForms() {
-        return formRepository.findAll();
+        return formRepository.findAllWithQuestions();
     }
 
     @Override
