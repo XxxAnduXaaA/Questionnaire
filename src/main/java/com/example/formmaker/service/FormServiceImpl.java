@@ -29,7 +29,7 @@ public class FormServiceImpl implements FormService {
 
     @Override
     public Form getFormById(Long formId) {
-        return formRepository.findById(formId).orElse(null);
+        return formRepository.findById(formId).orElseThrow(() -> FormException.FORM_NOT_FOUND(formId));
     }
 
     public Optional<Form> getFormByTitle(String title) {
@@ -58,7 +58,7 @@ public class FormServiceImpl implements FormService {
             updateQuestions(existingForm, updatedForm);
             return formRepository.save(existingForm);
         }
-        throw new RuntimeException("Form not found with id" + formId);
+        throw FormException.FORM_NOT_FOUND(formId);
     }
 
 
