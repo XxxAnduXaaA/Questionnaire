@@ -1,14 +1,11 @@
 package com.example.formmaker.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.Data;
 
 import java.util.List;
 
-@Data
 @Table(name = "question_table")
 @Entity
 @Data
@@ -39,23 +36,6 @@ public class Question {
 
     @Valid
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(
     List<Answer> answers;
-
-    @Valid
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserAnswer> userAnswers;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return Objects.equals(form.getFormId(), question.form.getFormId()) && Objects.equals(questionText, question.questionText) && Objects.equals(answers, question.answers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(form.getFormId(), questionText, answers);
-    }
 }

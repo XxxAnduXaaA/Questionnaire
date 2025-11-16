@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class FormResultsRequestDto {
+
     Long formId;
     Long userId;
     int page = 0;

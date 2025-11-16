@@ -20,16 +20,6 @@ public class UserAnswer {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "form_id", nullable = false)
-    private Form form;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
-
-    @NotNull
-    @ManyToOne
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
@@ -37,17 +27,5 @@ public class UserAnswer {
     @ManyToOne
     @JoinColumn(name = "user_form_id", nullable = false)
     private FormResult userForm;
-
-    @Override
-    public String toString() {
-        return "UserAnswer{" +
-                "userAnswerId=" + userAnswerId +
-                ", user=" + user +
-                ", form=" + form +
-                ", question=" + question +
-                ", answer=" + answer +
-                ", userForm=" + userForm +
-                '}';
-    }
 }
 

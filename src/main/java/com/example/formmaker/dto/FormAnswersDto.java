@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class FormAnswersDto {
+
     private Long formId;
     private List<UserAnswer> userAnswers;
 }

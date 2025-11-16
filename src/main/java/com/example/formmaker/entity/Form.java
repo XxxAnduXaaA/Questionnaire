@@ -1,6 +1,5 @@
 package com.example.formmaker.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +29,6 @@ public class Form {
     @Size(min = 1, message = "Должен быть хотя бы один вопрос")
     @Valid
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(
     private List<Question> questions;
 }

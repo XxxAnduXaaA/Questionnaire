@@ -33,12 +33,6 @@ public class FormResult {
     @Valid
     @OneToMany(mappedBy = "userForm", cascade = CascadeType.ALL)
     private List<UserAnswer> answers;
-
-    @PrePersist
-    public void onPrePersist(){
-        this.completedAt = LocalDateTime.now();
-    }
-
 }
 
 
