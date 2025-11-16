@@ -51,7 +51,7 @@
       <span th:unless="${fr.completedAt != null}">-</span>
     </td>
     <td>
-      <a th:href="@{/adminPanel/form/results/{id}(id=${fr.id})}">Просмотреть</a>
+      <a th:href="@{/admin-panel/form/results/{id}(id=${fr.id})}">Просмотреть</a>
     </td>
   </tr>
   </tbody>
@@ -61,7 +61,7 @@
 <div th:if="${results.totalPages > 1}">
   <ul>
     <li th:each="i : ${#numbers.sequence(0, results.totalPages - 1)}">
-      <a th:href="@{/adminPanel/form/results(page=${i}, size=${results.size},
+      <a th:href="@{/admin-panel/form/results(page=${i}, size=${results.size},
              formId=${param.formId}, userId=${param.userId})}"
          th:text="${i + 1}"
          th:classappend="${i == currentPage} ? 'active'">1</a>
