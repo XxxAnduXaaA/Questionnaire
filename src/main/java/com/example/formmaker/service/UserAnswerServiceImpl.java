@@ -24,14 +24,9 @@ public class UserAnswerServiceImpl implements UserAnswerService {
         Form form = questionsRepository.findByAnswers_AnswerId(userAnswers.get(0).getAnswer().getAnswerId()).getForm();
         FormResult formResult = formResultService.createFormResult(user, form);
 
-        for (UserAnswer ua : userAnswers) {
-            Question question = questionsRepository.findByAnswers_AnswerId(ua.getAnswer().getAnswerId());
-            ua.setUser(user);
-            ua.setQuestion(question);
-            ua.setForm(form);
-            ua.setUserForm(formResult);
-            readyToSaveUa.add(ua);
-        }
-        userAnswerRepository.saveAll(readyToSaveUa);
+        List<UserAnswer> readyToSaveUa = userAnswers.stream().map(
+                ua -> userAnswerMapper.mapToEntity(ua, user, formResult)).collect(Collectors.toList());
+        formResult.setAnswers(readyToSaveUa);
+        formResultRepository.save(formResult);
     }
 }
