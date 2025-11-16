@@ -79,4 +79,18 @@ public class FormResultServiceImpl implements FormResultService {
         formResult.setUser(user);
         return formResult;
     }
+
+    @Override
+    public void getUserFormPage(Long userFormId, Model model) {
+        FormResult formResult = formResultRepository
+                .findById(userFormId)
+                .orElseThrow(() -> FormResultException.NOT_FOUND(userFormId));
+        List<UserAnswer> userAnswers = formResult.getAnswers();
+        Map<Long, List<UserAnswer>> answersByQuestion = userAnswers.stream()
+                .collect(Collectors.groupingBy(ua -> ua.getAnswer().getQuestion().getQuestionId()));
+
+        model.addAttribute(Attribute.FORM, formResult.getForm());
+        model.addAttribute("answersByQuestion", answersByQuestion);
+    }
 }
+
