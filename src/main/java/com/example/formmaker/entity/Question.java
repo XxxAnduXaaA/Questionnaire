@@ -15,27 +15,17 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionId=" + questionId +
-                ", formId=" + (form != null ? form.getFormId() : null) +
-                ", questionText='" + questionText + '\'' +
-                ", answers=" + (answers != null ? answers.size() : 0) +
-                '}';
-    }
-
-
     @ManyToOne
     @JoinColumn(name = "form_id", nullable = false)
-    @JsonBackReference
     private Form form;
 
-    @Column
     private String questionText;
 
     @Valid
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @OneToMany(
+            mappedBy = "question",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
     List<Answer> answers;
 }

@@ -31,7 +31,11 @@ public class FormResult {
 
     @Size(min = 1)
     @Valid
-    @OneToMany(mappedBy = "userForm", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "userForm",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
     private List<UserAnswer> answers;
 }
 

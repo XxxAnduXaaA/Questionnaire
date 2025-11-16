@@ -28,7 +28,13 @@ public class Form {
 
     @Size(min = 1, message = "Должен быть хотя бы один вопрос")
     @Valid
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
     @OneToMany(
+            mappedBy = "form",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
     private List<Question> questions;
+
+    @OneToMany(mappedBy = "form", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<FormResult> formResults;
 }
