@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserAnswerServiceImpl implements UserAnswerService {
 
     private final QuestionsRepository questionsRepository;
