@@ -10,16 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
+@RequestMapping("/forms")
 @RequiredArgsConstructor
 public class FormController {
 
@@ -27,20 +25,20 @@ public class FormController {
     private final UserAnswerService userAnswerService;
     private final UserService userService;
 
-    @GetMapping("/forms")
+    @GetMapping
     public String getForms(Model model) {
         model.addAttribute(Attribute.FORMS, formService.getAllForms());
         return "forms";
     }
 
-    @PostMapping("/form/{formId}")
+    @PostMapping("/{formId}")
     public String submitForm(@ModelAttribute FormAnswersDto formAnswersDto, Principal principal) {
         User user = userService.findByEmail(principal.getName());
         userAnswerService.submitFormAnswers(user, formAnswersDto.getUserAnswers());
         return "submit-success";
     }
 
-    @GetMapping("/form/{formId}")
+    @GetMapping("/{formId}")
     public String getForm(@PathVariable Long formId, Model model) {
         model.addAttribute(Attribute.FORM, formService.getFormById(formId));
         model.addAttribute("formAnswersDto", new FormAnswersDto());
