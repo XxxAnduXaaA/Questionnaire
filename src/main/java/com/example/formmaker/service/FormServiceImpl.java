@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class FormServiceImpl implements FormService {
 
     private final FormRepository formRepository;

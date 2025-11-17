@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 
-@RequiredArgsConstructor
+
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
+@RequiredArgsConstructor
 public class FormController {
 
     private final FormService formService;

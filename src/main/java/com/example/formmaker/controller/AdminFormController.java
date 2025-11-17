@@ -14,8 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/admin-panel/form")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@RequestMapping("/admin-panel/form")
 @RequiredArgsConstructor
 public class AdminFormController {
 

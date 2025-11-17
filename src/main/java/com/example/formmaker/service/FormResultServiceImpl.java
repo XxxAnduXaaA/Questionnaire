@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class FormResultServiceImpl implements FormResultService {
 
     private final FormResultRepository formResultRepository;

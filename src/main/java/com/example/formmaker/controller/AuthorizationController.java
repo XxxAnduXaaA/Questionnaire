@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@RequiredArgsConstructor
+
 @Controller
+@RequiredArgsConstructor
 public class AuthorizationController {
 
     private final UserService userService;

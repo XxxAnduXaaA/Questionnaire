@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
+
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
 @RequestMapping("/{userId}/profile")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;

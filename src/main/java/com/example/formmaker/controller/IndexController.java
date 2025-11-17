@@ -10,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RequiredArgsConstructor
+
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
+@RequiredArgsConstructor
 public class IndexController {
 
     private final FormService formService;
