@@ -21,11 +21,11 @@ public class FormResult {
     private Long id;
 
     @NotNull
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User user;
 
     @NotNull
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Form form;
 
     @CreatedDate
