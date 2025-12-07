@@ -1,0 +1,23 @@
+package com.example.formmaker.service;
+
+import com.example.formmaker.entity.Form;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface FormService {
+
+    void createForm(Form form);
+
+    Form createBlankForm();
+
+    List<Form> getAllForms();
+
+    Optional<Form> getFormByTitle(String title);
+
+    Form getFormById(Long formId);
+
+    Form updateFormById(Long formId, Form updatedForm);
+
+    void deleteFormById(Long formId);
+}

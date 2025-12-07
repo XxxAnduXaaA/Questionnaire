@@ -1,0 +1,42 @@
+package com.example.formmaker.controller;
+
+import com.example.formmaker.entity.User;
+import com.example.formmaker.service.FormResultService;
+import com.example.formmaker.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+
+@Controller
+@PreAuthorize("hasAuthority('ROLE_USER')")
+@RequestMapping("/{userId}/profile")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+    private final FormResultService formResultService;
+
+    @GetMapping
+    public String getProfile(
+            @PathVariable Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
+        User user = userService.getUserById(userId);
+        model.addAttribute("completedForms", formResultService.getCompletedFormsByUser(page, size, userId));
+        model.addAttribute("currentUser", user);
+        return "user/profile";
+    }
+
+    @PutMapping
+    public String changeUserInfo(@PathVariable Long userId, @ModelAttribute("currentUser") User updatedUser) {
+        userService.changeUserInfo(userId, updatedUser);
+        return "user/profile";
+    }
+
+    @GetMapping("/{userFormId}")
+    public String getUserFormPage(@PathVariable Long userId, @PathVariable Long userFormId, Model model) {
+        formResultService.getUserFormPage(userFormId, model);
+        return "user/userForm";
+    }
+}

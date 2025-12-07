@@ -1,0 +1,47 @@
+package com.example.formmaker.controller;
+
+import com.example.formmaker.constant.Attribute;
+import com.example.formmaker.dto.FormAnswersDto;
+import com.example.formmaker.entity.User;
+import com.example.formmaker.service.FormService;
+import com.example.formmaker.service.UserAnswerService;
+import com.example.formmaker.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+
+
+@Controller
+@PreAuthorize("hasAuthority('ROLE_USER')")
+@RequestMapping("/forms")
+@RequiredArgsConstructor
+public class FormController {
+
+    private final FormService formService;
+    private final UserAnswerService userAnswerService;
+    private final UserService userService;
+
+    @GetMapping
+    public String getForms(Model model) {
+        model.addAttribute(Attribute.FORMS, formService.getAllForms());
+        return "forms";
+    }
+
+    @PostMapping("/{formId}")
+    public String submitForm(@ModelAttribute FormAnswersDto formAnswersDto, Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        userAnswerService.submitFormAnswers(user, formAnswersDto.getUserAnswers());
+        return "submit-success";
+    }
+
+    @GetMapping("/{formId}")
+    public String getForm(@PathVariable Long formId, Model model) {
+        model.addAttribute(Attribute.FORM, formService.getFormById(formId));
+        model.addAttribute("formAnswersDto", new FormAnswersDto());
+        return "form-view";
+    }
+}
